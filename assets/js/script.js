@@ -21,6 +21,10 @@ fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${lon
     .then(function(response){
         response.json().then(function(data){
             console.log(data);
-            // document.getElementById('currentTemp').innerHTML = data.current.temp;
+            document.getElementById('currentTemp').innerHTML = data.current.temp + " °F";
+            document.getElementById('currentWind').innerHTML = data.current.wind_speed;
+            document.getElementById('currentWindDeg').innerHTML = data.current.wind_deg;
+            document.getElementById('currentHumidity').innerHTML = data.current.humidity;
+            document.getElementById('currentUv').innerHTML = data.current.uvi;
         })
     })
