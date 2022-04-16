@@ -1,6 +1,7 @@
 var latitude = "44.986656";
 var longitude = "-93.258133";
 var apiKey = "5ba108ef8304fea45cf37033129cadbd";
+var geoKey = "9eca3ef09bf33b75f86893b2ec7e832d";
 var currentDate = document.getElementById("currentDate");
 var day = moment().format("MMMM Do");
 var tomorrow = moment().add(1, 'day').format("MMMM Do");
@@ -12,10 +13,6 @@ var day5 = moment().add(5, 'day').format("MMMM Do");
 var searchHistory = document.getElementById('searchHistory')
 var search = document.getElementById('search');
 var submit = document.getElementById('submit');
-var city = submit.addEventListener('click', function(){
-    console.log(search.value);
-})
-
 
 console.log(day);
 console.log(tomorrow);
@@ -27,6 +24,17 @@ document.getElementById('day-2').innerHTML = day2;
 document.getElementById('day-3').innerHTML = day3;
 document.getElementById('day-4').innerHTML = day4;
 document.getElementById('day-5').innerHTML = day5;
+
+//Geocoding location
+var citySearch = submit.addEventListener('click', function(){
+    console.log(search.value);
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${citySearch}&limit=5&appid=${geoKey}`)
+    .then(function(response){
+        response.json().then(function(data){
+            console.log(data);
+        })
+    })
+})
 
 
 fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
