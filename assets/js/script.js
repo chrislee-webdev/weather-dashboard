@@ -32,6 +32,7 @@ var citySearch = submit.addEventListener('click', function(){
             var newBtn = document.createElement('button');
             newBtn.innerHTML = search.value;
             document.getElementById('searchEl').appendChild(newBtn);
+            localStorage.setItem("key", search.value);
 
             fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
                 .then(function(response){

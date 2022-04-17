@@ -42,3 +42,9 @@ h2, h4{
     padding-right: 20px;
     padding-bottom: 15px;
 }
+
+button {
+    width: 173px;
+    margin-top: 10px;
+    border-radius: 15px;
+}
