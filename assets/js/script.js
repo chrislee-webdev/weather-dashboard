@@ -50,6 +50,7 @@ var citySearch = submit.addEventListener('click', function(){
                 document.getElementById('currentWind').innerHTML = data.current.wind_speed + " MPH";
                 document.getElementById('currentHumidity').innerHTML = data.current.humidity + " %";
                 document.getElementById('currentUv').innerHTML = data.current.uvi;
+                
                 //Next Day Info
                 var weatherIcon1 = data.daily[0].weather[0].icon;
                 console.log(weatherIcon1)
@@ -96,6 +97,12 @@ var citySearch = submit.addEventListener('click', function(){
                 document.getElementById('fiveDayTemp').innerHTML = data.daily[4].temp.max + " °F";
                 document.getElementById('fiveDayWind').innerHTML = data.daily[4].wind_speed + " MPH";
                 document.getElementById('fiveDayHumidity').innerHTML = data.daily[4].humidity + " %";
+
+                // var UvIndex = data.current.parseInt(uvi);
+                // if (UvIndex < 0.1) {
+                //     document.getElementById('currentUv').style.background = red;
+                // }
+
                 })
             });
 
