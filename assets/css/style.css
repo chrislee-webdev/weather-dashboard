@@ -66,3 +66,7 @@ button {
 .danger {
     background-color: rgb(245, 71, 71);
 }
+
+.weeklyWeatherId{
+    height: 150px;
+}
