@@ -28,13 +28,13 @@ var citySearch = submit.addEventListener('click', function(){
         response.json().then(function(data){          
             var latitude = data[0].lat;
             var longitude = data[0].lon;
-
             var newBtn = document.createElement('button');
             newBtn.innerHTML = search.value;
-            document.getElementById('searchEl').appendChild(newBtn);
+            document.getElementById('searchEl').appendChild(newBtn);   
             localStorage.setItem("key", search.value);
+            
 
-            fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
+            fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
                 .then(function(response){
                 response.json().then(function(data){
                 console.log(data);
@@ -45,11 +45,20 @@ var citySearch = submit.addEventListener('click', function(){
                 console.log(weatherIcon)
                 var weatherIconUrl = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png"
                 document.getElementById('weatherId').src = weatherIconUrl;
-
                 document.getElementById('currentTemp').innerHTML = data.current.temp + " °F";
                 document.getElementById('currentWind').innerHTML = data.current.wind_speed + " MPH";
                 document.getElementById('currentHumidity').innerHTML = data.current.humidity + " %";
                 document.getElementById('currentUv').innerHTML = data.current.uvi;
+                console.log(data.current.uvi);
+                //UV Index background color
+                if (data.current.uvi < 3){
+                    $('.currentUv').addClass('safe')
+                } else if (data.current.uvi >=3 && data.current.uvi < 6) {
+                    $('currentUv').addClass('moderate')
+                } else {
+                    $('currentUv').addClass('danger')
+                }
+                    
                 
                 //Next Day Info
                 var weatherIcon1 = data.daily[0].weather[0].icon;
@@ -65,7 +74,6 @@ var citySearch = submit.addEventListener('click', function(){
                 var weatherIcon2Url = "http://openweathermap.org/img/wn/" + weatherIcon2 + "@2x.png";
                 console.log(weatherIcon2);
                 document.getElementById('weatherId2').src = weatherIcon2Url;
-
                 document.getElementById('twoDayTemp').innerHTML = data.daily[1].temp.max + " °F";
                 document.getElementById('twoDayWind').innerHTML = data.daily[1].wind_speed + " MPH";
                 document.getElementById('twoDayHumidity').innerHTML = data.daily[1].humidity + " %";
@@ -83,7 +91,6 @@ var citySearch = submit.addEventListener('click', function(){
                 var weatherIcon4Url = "http://openweathermap.org/img/wn/" + weatherIcon4 +"@2x.png";
                 console.log(weatherIcon4);
                 document.getElementById('weatherId4').src = weatherIcon4Url;
-
                 document.getElementById('weatherId3').src = weatherIcon3Url;
                 document.getElementById('fourDayTemp').innerHTML = data.daily[3].temp.max + " °F";
                 document.getElementById('fourDayWind').innerHTML = data.daily[3].wind_speed + " MPH";
@@ -93,17 +100,11 @@ var citySearch = submit.addEventListener('click', function(){
                 var weatherIcon5Url = "http://openweathermap.org/img/wn/" + weatherIcon5 +"@2x.png";
                 console.log(weatherIcon5);
                 document.getElementById('weatherId5').src = weatherIcon5Url;
-
                 document.getElementById('fiveDayTemp').innerHTML = data.daily[4].temp.max + " °F";
                 document.getElementById('fiveDayWind').innerHTML = data.daily[4].wind_speed + " MPH";
                 document.getElementById('fiveDayHumidity').innerHTML = data.daily[4].humidity + " %";
-
-                // var UvIndex = data.current.parseInt(uvi);
-                // if (UvIndex < 0.1) {
-                //     document.getElementById('currentUv').style.background = red;
-                // }
-
                 })
+
             });
 
 
