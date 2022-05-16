@@ -38,6 +38,10 @@ var citySearch = submit.addEventListener('click', function(){
             searchArray.push(search.value);
             newBtn.setAttribute("type", "submit");
 
+            newBtn.addEventListener('click', function() {
+                
+            })
+
             //Console log the array
             console.log(searchArray);
             //Search history buttons
