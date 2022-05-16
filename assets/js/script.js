@@ -29,14 +29,19 @@ var citySearch = submit.addEventListener('click', function(){
         response.json().then(function(data){          
             var latitude = data[0].lat;
             var longitude = data[0].lon;
+            //Search history buttons
+
             var newBtn = document.createElement('button');
             newBtn.innerHTML = search.value;
             document.getElementById('searchEl').appendChild(newBtn);   
             localStorage.setItem("key", search.value);
             searchArray.push(search.value);
+            newBtn.setAttribute("type", "submit");
+
             //Console log the array
             console.log(searchArray);
             //Search history buttons
+
 
             fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
                 .then(function(response){
