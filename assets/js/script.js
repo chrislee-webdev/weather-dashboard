@@ -36,6 +36,7 @@ var citySearch = submit.addEventListener('click', function(){
             searchArray.push(search.value);
             //Console log the array
             console.log(searchArray);
+            //Search history buttons
 
             fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
                 .then(function(response){
