@@ -9,7 +9,8 @@ var day4 = moment().add(4, 'day').format("MMMM Do");
 var day5 = moment().add(5, 'day').format("MMMM Do");
 
 //Submit button click event and append new search button to list
-var searchHistory = document.getElementById('searchHistory')
+var searchArray = [];
+var searchHistory = document.getElementById('searchHistory');
 var search = document.getElementById('search');
 var submit = document.getElementById('submit');
 
@@ -32,6 +33,9 @@ var citySearch = submit.addEventListener('click', function(){
             newBtn.innerHTML = search.value;
             document.getElementById('searchEl').appendChild(newBtn);   
             localStorage.setItem("key", search.value);
+            searchArray.push(search.value);
+            //Console log the array
+            console.log(searchArray);
 
             fetch(`http://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`)
                 .then(function(response){
