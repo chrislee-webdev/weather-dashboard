@@ -9,7 +9,7 @@ var day4 = moment().add(4, 'day').format("MMMM Do");
 var day5 = moment().add(5, 'day').format("MMMM Do");
 
 //Submit button click event and append new search button to list
-var searchArray = [];
+var searchArray = JSON.parse(localStorage.getItem("weatherapi")) || [];
 var searchHistory = document.getElementById('searchHistory');
 var search = document.getElementById('search');
 var submit = document.getElementById('submit');
@@ -24,23 +24,22 @@ document.getElementById('day-5').innerHTML = day5;
 
 //Geocoding location
 var citySearch = submit.addEventListener('click', function(){
-    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${search.value}&limit=5&appid=${geoKey}`)
+
+    searchedCity(search.value)
+})
+function searchedCity(city){
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${geoKey}`)
     .then(function(response){
         response.json().then(function(data){          
             var latitude = data[0].lat;
             var longitude = data[0].lon;
             //Search history buttons
 
-            var newBtn = document.createElement('button');
-            newBtn.innerHTML = search.value;
-            document.getElementById('searchEl').appendChild(newBtn);   
-            localStorage.setItem("key", search.value);
-            searchArray.push(search.value);
-            newBtn.setAttribute("type", "submit");
-
-            newBtn.addEventListener('click', function() {
-                
-            })
+            if(searchArray.indexOf(city) === -1){
+                searchArray.push(city);
+                localStorage.setItem("weatherapi", JSON.stringify(searchArray));
+                 displayLocalStorage();
+            }
 
             //Console log the array
             console.log(searchArray);
@@ -52,7 +51,7 @@ var citySearch = submit.addEventListener('click', function(){
                 response.json().then(function(data){
                 console.log(data);
                 //Add name of city to HTML
-                document.getElementById('city').innerHTML = search.value + " - " + day;
+                document.getElementById('city').innerHTML = city + " - " + day;
                 //Get weather icon
                 var weatherIcon = data.current.weather[0].icon;
                 console.log(weatherIcon)
@@ -123,6 +122,26 @@ var citySearch = submit.addEventListener('click', function(){
 
         })
                 })
-    })
+    }
 
     
+function displayLocalStorage() {
+    var searchArray = JSON.parse(localStorage.getItem("weatherapi")) || [];
+    document.getElementById('searchEl').innerHTML = ''
+    for (let i = 0; i < searchArray.length; i++) {
+        var newBtn = document.createElement('button');
+        newBtn.innerText = searchArray[i];
+        newBtn.setAttribute("data-city", searchArray[i]);
+        newBtn.addEventListener('click', cityData)
+        document.getElementById('searchEl').appendChild(newBtn);
+
+    }
+}
+
+function cityData() {
+    var city = this.getAttribute("data-city")
+    console.log(city);
+    searchedCity(city);
+}
+
+displayLocalStorage()
